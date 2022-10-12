@@ -9,7 +9,7 @@ bot = telebot.TeleBot(config.TOKEN)
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
-	'''welcome sticker and welcome msg'''
+	'''welcome sticker and message, big keybord appears'''
 	sti = open('stickers/sticker_owl.webp', 'rb')
 	bot.send_sticker(message.chat.id, sti)
 
@@ -20,7 +20,14 @@ def welcome(message):
 
 	markup.add(item1, item2)
 
-	bot.send_message(message.chat.id, 'Welcome, {0.username}!\nThis is <b>{1.first_name}</b>, bot for downloading Youtube videos.'.format(message.from_user, bot.get_me()), parse_mode='html', reply_markup=markup)
+	#keyboard2
+	markup2 = types.ReplyKeyboardMarkup(resize_keyboard=True)
+	item12 = types.KeyboardButton('Random memes')
+	item22 = types.KeyboardButton('Download Ytube video')
+
+	markup2.add(item12, item22)
+
+	bot.send_message(message.chat.id, 'Welcome, {0.username}!\nThis is <b>{1.first_name}</b>, bot for downloading Youtube videos.'.format(message.from_user, bot.get_me()), parse_mode='html', reply_markup=markup2)
 
 
 @bot.message_handler(content_types=['text'])
@@ -32,15 +39,16 @@ def lalala(message):
 			bot.send_message(message.chat.id, str(random.randint(0,100)))
 		elif message.text == 'Wazzup?':
 
-			markup = types.InlineKeyboardMarkup(row_width=2)
+			markup = types.InlineKeyboardMarkup(row_width=1)
 			item1 = types.InlineKeyboardButton('Good', callback_data='good')
 			item2 = types.InlineKeyboardButton('So-so', callback_data='bad')
 
 			markup.add(item1, item2)
 
-			bot.send_message(message.chat.id, 'I am fine cause im bot!', reply_markup=markup)
+			bot.send_message(message.chat.id, 'I am fine cause im bot! And you?', reply_markup=markup)
 		else:
 			bot.send_message(message.chat.id, 'Soo, impossible :)')
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
