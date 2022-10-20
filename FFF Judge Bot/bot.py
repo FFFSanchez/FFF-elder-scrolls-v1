@@ -3,6 +3,7 @@ import logging
 import re
 import random
 import pafy
+import btc_currency
 
 from filters import IsAdminFilter
 from aiogram import Bot, Dispatcher, executor, types
@@ -45,8 +46,12 @@ async def filter_messages(message: types.Message): #just types annotation?
 		with open('log.txt', 'a') as l:
 			print('MSG with bad word deleted', file=l)
 		await message.delete()
+
 	elif re.search(r'\b[Пп]изд.*', message.text):
 		await message.reply(random.choice(['Оскорбление администрации расстрел', 'Кемперство бан', 'Читы бан пацанчик']))
+
+	elif message.text == 'Биток скока там ща':
+		await message.answer(btc_currency.get_data())
 
 
 # echo
